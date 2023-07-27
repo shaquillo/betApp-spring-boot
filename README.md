@@ -44,4 +44,4 @@ L'API est lancé en local sur le port 8887
 
 4. Ajouter une mise
 
-![add bet](../images/add_bet.png)
+![add bet](./images/add_bet.png)
