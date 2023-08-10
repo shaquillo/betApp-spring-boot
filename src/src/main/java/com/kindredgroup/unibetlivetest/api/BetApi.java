@@ -27,6 +27,7 @@ public class BetApi {
 
      @PostMapping(Urls.ADD_BET)
      public Bet addBet(@RequestBody AddBetDto bet){
+        log.info("BetApi : Adding bet");
         return betService.addBet(bet);
      }
 

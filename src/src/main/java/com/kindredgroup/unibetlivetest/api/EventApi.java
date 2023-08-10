@@ -37,6 +37,7 @@ public class EventApi {
 
      @GetMapping(Urls.EVENTS)
      public List<Event> fetchEvents(@RequestParam(name = "isLive", required = false) boolean isLive){
+        log.info("EventService : finding events with live state = %s", isLive);
         return eventService.findEvents(isLive);
      }
 
@@ -47,6 +48,7 @@ public class EventApi {
 
      @GetMapping(Urls.SELECTIONS)
      public List<Selection> fetchSelections(@PathVariable(name = "id") Long id, @RequestParam(name = "state") SelectionState state){
+        log.info("EventService : finding selections by eventId = %d and selectionState = %s", id, state.toString());
         return selectionService.findSelections(id, state);
      }
 

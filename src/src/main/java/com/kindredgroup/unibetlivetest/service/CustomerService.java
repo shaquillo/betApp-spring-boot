@@ -18,6 +18,7 @@ public class CustomerService {
     private final CustomerRepository customerRepository;
 
     public Customer findCustomerByPseudo(String pseudo) {
+        log.info("CustomerService : finding customer with pseudo = %s", pseudo);
         return customerRepository.getCustomerByPseudo(pseudo).orElseThrow(() -> new CustomException(format("customer %s not found", pseudo), ExceptionType.EXCEPTION_NOT_FOUND));
     }
 }

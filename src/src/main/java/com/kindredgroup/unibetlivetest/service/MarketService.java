@@ -1,6 +1,7 @@
 package com.kindredgroup.unibetlivetest.service;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.kindredgroup.unibetlivetest.repository.BetRepository;
 import com.kindredgroup.unibetlivetest.repository.CustomerRepository;
@@ -23,10 +24,24 @@ public class MarketService {
      * 1. Récupère les mises gagnantes et dont la sélection est ferme
      * 2. Mis à jour du montant que possède le client
      */
+
+    @Transactional
     public Long payCustomers(){
+        log.info("MarketService : Looking for customers to pay : ");
+
         return betRepository.getBetByBetStateEqualsAndSelection_StateEquals(BetState.WON, SelectionState.CLOSED)
                     .stream()
-                    .map(bet -> bet.getCustomer().setBalance(bet.getCustomer().getBalance().add(bet.getSelection().getCurrentOdd().multiply(bet.getAmount()))))
+                    .map(bet -> {
+                        bet.setBetState(null);
+                        return bet;
+                        })
+                    .map(betRepository::save)
+                    .map(bet -> 
+                        { 
+                            log.info("MarketService : Paying customer %s", bet.getCustomer().getPseudo());
+                            bet.getCustomer().setBalance(bet.getCustomer().getBalance().add(bet.getSelection().getCurrentOdd().multiply(bet.getAmount())));
+                            return bet.getCustomer();
+                        })
                     .map(customerRepository::save)
                     .count();
     }

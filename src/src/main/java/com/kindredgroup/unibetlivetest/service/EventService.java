@@ -26,22 +26,22 @@ public class EventService {
 
     public List<Event> findEvents(boolean isLive){
 
-        List<Event> events = eventRepository.findAll();
+        List<Event> events;
 
         if(isLive){
-             events = events.stream().filter((event) -> {
-            for(Market market : event.getMarkets()){
-                for(Selection selection: market.getSelections()){
-                    if(selection.getState() != SelectionState.OPENED){
-                        return false;
-                    }
-                }
-            }
-            return true;
-            }).collect(Collectors.toList());
+
+            log.info("EventService : finding live events");
+            
+            events = eventRepository.getEventByMarket_Selection_StateEquals(SelectionState.OPENED);
 
             if(events.isEmpty()) throw new CustomException("No live event", ExceptionType.EXCEPTION_NO_CONTENT);
+
+            return events;
         }
+
+        log.info("EventService : finding all events");
+
+        events = eventRepository.findAll();
 
         if(events.isEmpty()) throw new CustomException("No event", ExceptionType.EXCEPTION_NO_CONTENT);
 

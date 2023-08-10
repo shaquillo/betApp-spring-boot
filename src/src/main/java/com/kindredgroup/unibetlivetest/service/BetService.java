@@ -3,6 +3,7 @@ package com.kindredgroup.unibetlivetest.service;
 import java.math.BigDecimal;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.kindredgroup.unibetlivetest.dto.AddBetDto;
 import com.kindredgroup.unibetlivetest.entity.Bet;
@@ -32,10 +33,14 @@ public class BetService {
      * 1. Vérifie que la mise n'existe pas
      * 2. Vérifie que la sélection choisie est ouverte et que la cote envoyée correspond à celle de la sélection
      * 3. Vérifie que le client a accès d'argent pour la mise
-     * 4. Enregistrer la mise
+     * 4. Mettre à jour le montant que possède le client
+     * 5. Enregistrer la mise
      */
 
+    @Transactional
     public Bet addBet(AddBetDto betDto){
+
+        log.info("BetService: Adding Bet");
 
         if(betRepository.existsBetByName(betDto.getName())) throw new CustomException(String.format("Bet %s already exist", betDto.getName()), ExceptionType.EXCEPTION_CONFLICT);
 
@@ -54,6 +59,13 @@ public class BetService {
         bet.setSelection(selection);
         bet.setCustomer(customer);
 
-        return betRepository.save(bet);
+        customer.setBalance(customer.getBalance().subtract(betTotalAmount));
+        customerRepository.save(customer);
+
+        bet = betRepository.save(bet);
+
+        log.info("BetService : Bet added, id = %d", bet.getId());
+
+        return bet;
     }
 }
