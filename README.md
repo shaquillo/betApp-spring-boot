@@ -2,7 +2,7 @@
 
 Test Technique KINDRED - UNIBET France.
 
-## Contenu du repositoire
+## Contenu du dépôt 
 1. src : code source de l'API.
 
 2. enonce.pdf : enoncé du test technique.
