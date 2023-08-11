@@ -30,7 +30,7 @@ public class EventService {
 
         if(isLive){
 
-            log.info("EventService : finding live events");
+            log.info("Finding live events");
             
             events = eventRepository.getEventByMarket_Selection_StateEquals(SelectionState.OPENED);
 
@@ -39,7 +39,7 @@ public class EventService {
             return events;
         }
 
-        log.info("EventService : finding all events");
+        log.info("Finding all events");
 
         events = eventRepository.findAll();
 

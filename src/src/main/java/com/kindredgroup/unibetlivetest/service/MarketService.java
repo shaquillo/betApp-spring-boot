@@ -27,7 +27,7 @@ public class MarketService {
 
     @Transactional
     public Long payCustomers(){
-        log.info("MarketService : Looking for customers to pay : ");
+        log.info("Looking for customers to pay : ");
 
         return betRepository.getBetByBetStateEqualsAndSelection_StateEquals(BetState.WON, SelectionState.CLOSED)
                     .stream()
@@ -38,7 +38,7 @@ public class MarketService {
                     .map(betRepository::save)
                     .map(bet -> 
                         { 
-                            log.info("MarketService : Paying customer %s", bet.getCustomer().getPseudo());
+                            log.info("Paying customer %s", bet.getCustomer().getPseudo());
                             bet.getCustomer().setBalance(bet.getCustomer().getBalance().add(bet.getSelection().getCurrentOdd().multiply(bet.getAmount())));
                             return bet.getCustomer();
                         })

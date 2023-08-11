@@ -48,7 +48,7 @@ public class EventApi {
 
      @GetMapping(Urls.SELECTIONS)
      public List<Selection> fetchSelections(@PathVariable(name = "id") Long id, @RequestParam(name = "state") SelectionState state){
-        log.info("EventService : finding selections by eventId = %d and selectionState = %s", id, state.toString());
+        log.info("Finding selections by eventId = %d and selectionState = %s", id, state.toString());
         return selectionService.findSelections(id, state);
      }
 

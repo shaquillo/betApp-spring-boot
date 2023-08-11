@@ -61,6 +61,8 @@ public class SelectionService {
      */
 
     public List<Selection> findSelections(Long eventId, SelectionState state){
+        log.info("Finding selections with eventId = %d and selectionState = %s", eventId, state.toString());
+
         eventRepository.findById(eventId).orElseThrow(() -> new CustomException(String.format("Event with id %d not found", eventId), ExceptionType.EXCEPTION_NOT_FOUND));
 
         return selectionRepository.getSelectionByMarket_Event_IdEqualsAndStateEquals(eventId, state);
