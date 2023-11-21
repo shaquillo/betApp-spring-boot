@@ -1,13 +1,5 @@
 # BetApp Spring-boot
 
-## Contenu du dépôt 
-1. src : code source de l'API.
-
-2. enonce.pdf : enoncé du test technique.
-
-3. solution.pdf : versions et choix techniques de la solution proposée. 
-
-
 ## Lancer l'API
 
 Pour lancer l'API réalisé avec Spring Boot, se placer dans le répertoire "src" contenant le fichier "pom.xml" et exécuter les commandes suivantes.
