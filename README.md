@@ -1,6 +1,4 @@
-# Test Technique
-
-Test Technique KINDRED - UNIBET France.
+# BetApp Spring-boot
 
 ## Contenu du dépôt 
 1. src : code source de l'API.
